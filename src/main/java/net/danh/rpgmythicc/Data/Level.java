@@ -21,13 +21,17 @@ public class Level {
         return level.get(p.getName() + "_level_");
     }
 
+    public static boolean isUnload(@NotNull Player p) {
+        return !level.containsKey(p.getName() + "_level_");
+    }
+
     public static void setLevel(@NotNull Player p, Integer amount) {
         level.put(p.getName() + "_level_", Math.max(amount, 1));
     }
 
     public static void addLevel(@NotNull Player p, Integer amount) {
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation());
-        hologram.appendTextLine(Files.colorize("&a+ " + amount + " RPGMythicc Level"));
+        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(0, 2, 0));
+        hologram.appendTextLine(Files.colorize("&a+ " + amount + " Mythicc Level"));
         level.replace(p.getName() + "_level_", getLevel(p) + amount);
     }
 
@@ -37,8 +41,8 @@ public class Level {
         } else {
             level.put(p.getName() + "_level_", 1);
         }
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation());
-        hologram.appendTextLine(Files.colorize("&c- " + amount + " RPGMythicc Level"));
+        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(0, 2, 0));
+        hologram.appendTextLine(Files.colorize("&c- " + amount + " Mythicc Level"));
     }
 
     public static void saveLevelData(@NotNull Player p) {

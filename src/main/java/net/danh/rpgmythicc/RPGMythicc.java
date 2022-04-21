@@ -31,13 +31,15 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
         return instance;
     }
 
-    public static final MythiccLevel MYTHICC_LEVEL = new MythiccLevel();
+    @Override
+    public void onLoad() {
+        instance = this;
+        MMOItems.plugin.getStats().register(new MythiccLevel());
+    }
 
     @Override
     public void onEnable() {
-        instance = this;
         if (getServer().getPluginManager().getPlugin("MMOItems") != null) {
-            MMOItems.plugin.getStats().register(MYTHICC_LEVEL);
             getLogger().log(Level.INFO, "Successfully hooked with MMOItems!");
         } else {
             getLogger().severe("*** MMOItems is not installed or not enabled. ***");
@@ -68,7 +70,7 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
                 }
             }
 
-        }.runTaskTimer(this, 60 * 20L, 60 * 20L);
+        }.runTaskTimer(this, 10 * 20L, 10 * 20L);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -84,6 +86,9 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
     public void onDisable() {
         for (Player p : getServer().getOnlinePlayers()) {
             Data.save(p);
+        }
+        for (Hologram hologram : HologramsAPI.getHolograms(RPGMythicc.get())) {
+            Data.deleteIfOld(hologram);
         }
     }
 

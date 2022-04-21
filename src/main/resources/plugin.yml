@@ -3,11 +3,10 @@ version: '${project.version}'
 main: net.danh.rpgmythicc.RPGMythicc
 api-version: 1.17
 loadbefore: [ MMOItems ]
-depend: [ MMOItems, MythicLib ]
+depend: [ MMOItems ]
 softdepend: [ PlaceholderAPI, HolographicDisplays ]
 authors: [ VoChiDanh ]
 description: Plugins For MythiccRPG Project
 commands:
   RPGMythicc:
     description: Admin cmd
-    usage: /RPGMythicc <level/xp> <add/set/remove> <player> <amount>

@@ -2,11 +2,10 @@ package net.danh.rpgmythicc.Compatible;
 
 import io.lumine.mythic.lib.api.item.NBTItem;
 import net.Indyuce.mmoitems.api.player.RPGPlayer;
-import net.Indyuce.mmoitems.api.util.message.Message;
 import net.Indyuce.mmoitems.stat.type.DoubleStat;
 import net.Indyuce.mmoitems.stat.type.ItemRestriction;
 import net.danh.rpgmythicc.Data.Level;
-import org.bukkit.ChatColor;
+import net.danh.rpgmythicc.Manager.Files;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.jetbrains.annotations.NotNull;
@@ -22,9 +21,9 @@ public class MythiccLevel extends DoubleStat implements ItemRestriction {
     @Override
     public boolean canUse(@NotNull RPGPlayer rpgPlayer, @NotNull NBTItem nbtItem, boolean b) {
         int level = nbtItem.getInteger("MMOITEMS_MYTHICC_LEVEL");
-        if (Level.getLevel(rpgPlayer.getPlayer()) < level && !rpgPlayer.getPlayer().hasPermission("RPGMythicc.admin")) {
+        if (Level.isUnload(rpgPlayer.getPlayer()) && Level.getLevel(rpgPlayer.getPlayer()) < level && !rpgPlayer.getPlayer().hasPermission("RPGMythicc.admin")) {
             if (b) {
-                Message.NOT_ENOUGH_LEVELS.format(ChatColor.RED).send(rpgPlayer.getPlayer());
+                rpgPlayer.getPlayer().sendTitle(Files.colorize("&c&lCảnh Báo"), Files.colorize("&3Cấp độ của bạn không đủ để dùng vật phẩm này"), 20, 10, 20);
                 rpgPlayer.getPlayer().playSound(rpgPlayer.getPlayer().getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1.5f);
             }
             return false;

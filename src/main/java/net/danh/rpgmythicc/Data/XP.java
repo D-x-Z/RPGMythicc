@@ -26,8 +26,8 @@ public class XP {
     }
 
     public static void addXP(@NotNull Player p, Integer amount) {
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation());
-        hologram.appendTextLine(Files.colorize("&a+ " + amount + " RPGMythicc XP"));
+        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(0, 2, 0));
+        hologram.appendTextLine(Files.colorize("&a+ " + amount + " Mythicc XP"));
         xp.replace(p.getName() + "_xp_", getXP(p) + amount);
         Data.checkLevelup(p);
     }
@@ -38,8 +38,8 @@ public class XP {
         } else {
             xp.put(p.getName() + "_xp_", 0);
         }
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation());
-        hologram.appendTextLine(Files.colorize("&c- " + amount + " RPGMythicc XP"));
+        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(0, 2, 0));
+        hologram.appendTextLine(Files.colorize("&c- " + amount + " Mythicc XP"));
     }
 
     public static void saveXPData(@NotNull Player p) {
