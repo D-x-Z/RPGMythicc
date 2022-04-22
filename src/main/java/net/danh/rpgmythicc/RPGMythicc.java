@@ -6,12 +6,15 @@ import net.Indyuce.mmoitems.MMOItems;
 import net.danh.rpgmythicc.Compatible.MythiccLevel;
 import net.danh.rpgmythicc.Compatible.PlaceholderAPI;
 import net.danh.rpgmythicc.Data.Data;
+import net.danh.rpgmythicc.Event.Death;
 import net.danh.rpgmythicc.Event.Join;
 import net.danh.rpgmythicc.Event.Quit;
 import net.danh.rpgmythicc.Manager.Commands;
 import net.danh.rpgmythicc.Manager.Files;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +34,8 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
         return instance;
     }
 
+    public static Economy economy;
+
     @Override
     public void onLoad() {
         instance = this;
@@ -39,6 +44,11 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        if (!setupEconomy()) {
+            getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            this.setEnabled(false);
+            return;
+        }
         if (getServer().getPluginManager().getPlugin("MMOItems") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with MMOItems!");
         } else {
@@ -51,6 +61,14 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
             getLogger().log(Level.INFO, "Successfully hooked with HolographicDisplays!");
         } else {
             getLogger().severe("*** HolographicDisplays is not installed or not enabled. ***");
+            getLogger().severe("*** This plugin will be disabled. ***");
+            this.setEnabled(false);
+            return;
+        }
+        if (getServer().getPluginManager().getPlugin("Vault") != null) {
+            getLogger().log(Level.INFO, "Successfully hooked with Vault!");
+        } else {
+            getLogger().severe("*** Vault is not installed or not enabled. ***");
             getLogger().severe("*** This plugin will be disabled. ***");
             this.setEnabled(false);
             return;
@@ -96,6 +114,7 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
     private @NotNull ArrayList<Listener> initializeListeners() {
         return new ArrayList<>(Arrays.asList(
                 new Join(),
+                new Death(),
                 new Quit()
         ));
     }
@@ -107,5 +126,11 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
         ArrayList<Listener> listeners = initializeListeners();
         EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
         eventHandlerRegistry.registerEventHandlers(listeners, this);
+    }
+
+    private boolean setupEconomy() {
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
+        if (economyProvider != null) economy = economyProvider.getProvider();
+        return (economy != null);
     }
 }
