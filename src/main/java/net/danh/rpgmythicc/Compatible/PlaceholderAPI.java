@@ -27,7 +27,7 @@ public class PlaceholderAPI extends PlaceholderExpansion {
     @Override
     public String onPlaceholderRequest(Player p, @NotNull String identifier) {
         if (p == null) {
-            return "Player not online";
+            return "";
         }
         if (identifier.equalsIgnoreCase("xp")) {
             return String.valueOf(XP.getXP(p));

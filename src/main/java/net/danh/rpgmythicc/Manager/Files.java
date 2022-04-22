@@ -16,11 +16,16 @@ import static net.danh.rpgmythicc.RPGMythicc.get;
 public class Files {
 
     public final static char COLOR_CHAR = ChatColor.COLOR_CHAR;
-    private static File dataFile;
-    private static FileConfiguration data;
+    private static File configFile, languageFile, dataFile;
+    private static FileConfiguration config, language, data;
 
     public static void createfiles() {
+        configFile = new File(get().getDataFolder(), "config.yml");
+        languageFile = new File(get().getDataFolder(), "language.yml");
         dataFile = new File(get().getDataFolder(), "data.yml");
+
+        if (!configFile.exists()) get().saveResource("config.yml", false);
+        if (!languageFile.exists()) get().saveResource("language.yml", false);
         if (!dataFile.exists()) {
             dataFile.getParentFile().mkdirs();
             try {
@@ -29,20 +34,49 @@ public class Files {
                 e.printStackTrace();
             }
         }
+        config = new YamlConfiguration();
+        language = new YamlConfiguration();
         data = new YamlConfiguration();
 
         try {
+            config.load(configFile);
+            language.load(languageFile);
             data.load(dataFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
     }
 
+    public static FileConfiguration getconfigfile() {
+        return config;
+    }
+
+    public static FileConfiguration getlanguagefile() {
+        return language;
+    }
 
     public static FileConfiguration getdatafile() {
         return data;
     }
 
+    public static void reloadfiles() {
+        config = YamlConfiguration.loadConfiguration(configFile);
+        language = YamlConfiguration.loadConfiguration(languageFile);
+    }
+
+    public static void saveconfig() {
+        try {
+            config.save(configFile);
+        } catch (IOException ignored) {
+        }
+    }
+
+    public static void savelanguage() {
+        try {
+            language.save(languageFile);
+        } catch (IOException ignored) {
+        }
+    }
 
     public static void savedata() {
         try {
@@ -51,7 +85,7 @@ public class Files {
         }
     }
 
-    // Colorize messages with preset colorcodes (&) and if using 1.16+, applies hex values via "&#hexvalue"
+    // Colorize messages with preset color-codes (&) and if using 1.16+, applies hex values via "&#hexvalue"
     public static @NotNull String colorize(String input) {
 
         input = ChatColor.translateAlternateColorCodes('&', input);

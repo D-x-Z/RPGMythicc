@@ -28,13 +28,12 @@ import java.util.logging.Level;
 
 public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
 
+    public static Economy economy;
     private static RPGMythicc instance;
 
     public static RPGMythicc get() {
         return instance;
     }
-
-    public static Economy economy;
 
     @Override
     public void onLoad() {
@@ -108,6 +107,8 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
         for (Hologram hologram : HologramsAPI.getHolograms(RPGMythicc.get())) {
             Data.deleteIfOld(hologram);
         }
+        Files.saveconfig();
+        Files.savelanguage();
     }
 
     @Contract(" -> new")

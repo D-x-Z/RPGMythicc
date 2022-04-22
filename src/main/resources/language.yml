@@ -1,0 +1,6 @@
+HELP:
+  - "&a/RPGMythicc [level/xp] [add/set/remove] [player] [amount] | Edit player stats"
+  - "&a/RPGMythicc reload | Reload files"
+DEATH:
+  PLAYER: "&aBạn chết và mất %money%$ và %xp% XP"
+  KILLER: "&aBạn nhận được %money%$ và %xp% XP từ &3%player%"

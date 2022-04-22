@@ -25,6 +25,8 @@ public class MythiccLevel extends DoubleStat implements ItemRestriction {
             if (b) {
                 rpgPlayer.getPlayer().sendTitle(Files.colorize("&c&lCảnh Báo"), Files.colorize("&3Cấp độ của bạn không đủ để dùng vật phẩm này"), 20, 10, 20);
                 rpgPlayer.getPlayer().playSound(rpgPlayer.getPlayer().getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1.5f);
+                /*                new StatModifier(rpgPlayer.getPlayer().getName(), "MYTHICC_LEVEL", 5 - Level.getLevel(rpgPlayer.getPlayer())).register(MMOPlayerData.get(rpgPlayer.getPlayer()));
+                 */
             }
             return false;
         }

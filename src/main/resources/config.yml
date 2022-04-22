@@ -1,0 +1,5 @@
+SETTINGS:
+  DEATH:
+    ENABLE: true
+    MONEY: 5
+    XP: 5

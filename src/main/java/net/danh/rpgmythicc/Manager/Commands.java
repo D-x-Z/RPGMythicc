@@ -16,6 +16,11 @@ public class Commands implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (label.equalsIgnoreCase("RPGMythicc")) {
             if (sender.hasPermission("RPGMythicc.admin")) {
+                if (args.length == 0) {
+                    for (String help : Files.getlanguagefile().getStringList("HELP")) {
+                        sender.sendMessage(Files.colorize(help));
+                    }
+                }
                 if (args.length == 4) {
                     if (Bukkit.getPlayer(args[2]) != null) {
                         if (Integer.parseInt(args[3]) >= 0) {

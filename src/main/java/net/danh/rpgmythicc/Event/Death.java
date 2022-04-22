@@ -10,24 +10,33 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class Death implements Listener {
 
     @EventHandler
     public void onDeath(@NotNull PlayerDeathEvent e) {
         Player p = e.getEntity();
         Player k = p.getKiller();
-        double money = RPGMythicc.economy.getBalance(p) / 20;
-        int xp = XP.getXP(p) / 5;
-        EconomyResponse economyResponse = RPGMythicc.economy.withdrawPlayer(p, money);
-        XP.removeXP(p, xp);
-        if (economyResponse.transactionSuccess()) {
-            p.sendMessage(Files.colorize("&aBạn chết và mất 20% số tiền hiện có và 5% XP"));
-        }
-        if (k != null) {
-            EconomyResponse economy = RPGMythicc.economy.depositPlayer(k, money);
-            XP.addXP(k, xp);
-            if (economy.transactionSuccess()) {
-                k.sendMessage(Files.colorize("&aBạn nhận được và 20% số tiền và 5% XP từ &3" + p.getName()));
+        if (Files.getconfigfile().getBoolean("SETTINGS.DEATH.ENABLE")) {
+            double money = RPGMythicc.economy.getBalance(p) / Files.getconfigfile().getInt("SETTINGS.DEATH.MONEY");
+            int xp = XP.getXP(p) / Files.getconfigfile().getInt("SETTINGS.DEATH.XP");
+            EconomyResponse economyResponse = RPGMythicc.economy.withdrawPlayer(p, money);
+            XP.removeXP(p, xp);
+            if (economyResponse.transactionSuccess()) {
+                p.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("DEATH.PLAYER"))
+                        .replaceAll("%money%", String.format("%4.3f", money))
+                        .replaceAll("%xp%", String.format("%,d", xp))));
+            }
+            if (k != null) {
+                EconomyResponse economy = RPGMythicc.economy.depositPlayer(k, money);
+                XP.addXP(k, xp);
+                if (economy.transactionSuccess()) {
+                    k.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("DEATH.KILLER"))
+                            .replaceAll("%money%", String.format("%4.3f", money))
+                            .replaceAll("%xp%", String.format("%,d", xp))
+                            .replaceAll("%player%", p.getName())));
+                }
             }
         }
     }
