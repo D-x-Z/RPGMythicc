@@ -3,3 +3,7 @@ SETTINGS:
     ENABLE: true
     MONEY: 5
     XP: 5
+  RANK:
+    ID0: "&cID không tồn tại"
+    ID1: "&bNewbie"
+    ID2: "&3Member"

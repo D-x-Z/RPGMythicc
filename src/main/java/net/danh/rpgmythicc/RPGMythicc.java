@@ -82,17 +82,11 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                for (Hologram hologram : HologramsAPI.getHolograms(RPGMythicc.get())) {
-                    Data.deleteIfOld(hologram);
-                }
-            }
-
-        }.runTaskTimer(this, 10 * 20L, 10 * 20L);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
                 for (Player p : getServer().getOnlinePlayers()) {
                     p.setLevel(net.danh.rpgmythicc.Data.Level.getLevel(p));
+                }
+                for (Hologram hologram : HologramsAPI.getHolograms(RPGMythicc.get())) {
+                    Data.deleteIfOld(hologram);
                 }
             }
 

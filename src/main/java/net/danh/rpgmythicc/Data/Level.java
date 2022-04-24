@@ -2,6 +2,7 @@ package net.danh.rpgmythicc.Data;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import net.danh.rpgmythicc.Manager.Files;
 import net.danh.rpgmythicc.RPGMythicc;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ public class Level {
     static HashMap<String, Integer> level = new HashMap<>();
 
     public static int getLevelData(@NotNull Player p) {
-        return Files.getdatafile().getInt("players." + p.getName() + ".level");
+        return Files.getdatafile().getInt("players." + p.getName() + ".Level");
     }
 
     public static int getLevel(@NotNull Player p) {
@@ -30,7 +31,10 @@ public class Level {
     }
 
     public static void addLevel(@NotNull Player p, Integer amount) {
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(0, 2, 0));
+        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(1.5, 1.5, 0));
+        VisibilityManager visiblityManager = hologram.getVisibilityManager();
+        visiblityManager.showTo(p);
+        visiblityManager.setVisibleByDefault(false);
         hologram.appendTextLine(Files.colorize("&a+ " + amount + " Mythicc Level"));
         level.replace(p.getName() + "_level_", getLevel(p) + amount);
     }
@@ -41,11 +45,10 @@ public class Level {
         } else {
             level.put(p.getName() + "_level_", 1);
         }
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(0, 2, 0));
+        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(1.5, 1.5, 0));
+        VisibilityManager visiblityManager = hologram.getVisibilityManager();
+        visiblityManager.showTo(p);
+        visiblityManager.setVisibleByDefault(false);
         hologram.appendTextLine(Files.colorize("&c- " + amount + " Mythicc Level"));
-    }
-
-    public static void saveLevelData(@NotNull Player p) {
-        Files.getdatafile().set("players." + p.getName() + ".level", getLevel(p));
     }
 }

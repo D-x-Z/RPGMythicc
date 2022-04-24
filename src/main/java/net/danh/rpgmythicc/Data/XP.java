@@ -2,6 +2,7 @@ package net.danh.rpgmythicc.Data;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 import net.danh.rpgmythicc.Manager.Files;
 import net.danh.rpgmythicc.RPGMythicc;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ public class XP {
     private static final HashMap<String, Integer> xp = new HashMap<>();
 
     public static int getXPData(@NotNull Player p) {
-        return Files.getdatafile().getInt("players." + p.getName() + ".xp");
+        return Files.getdatafile().getInt("players." + p.getName() + ".XP");
     }
 
     public static int getXP(@NotNull Player p) {
@@ -26,7 +27,10 @@ public class XP {
     }
 
     public static void addXP(@NotNull Player p, Integer amount) {
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(0, 2, 0));
+        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(1.5, 1.5, 0));
+        VisibilityManager visiblityManager = hologram.getVisibilityManager();
+        visiblityManager.showTo(p);
+        visiblityManager.setVisibleByDefault(false);
         hologram.appendTextLine(Files.colorize("&a+ " + amount + " Mythicc XP"));
         xp.replace(p.getName() + "_xp_", getXP(p) + amount);
         Data.checkLevelup(p);
@@ -38,11 +42,11 @@ public class XP {
         } else {
             xp.put(p.getName() + "_xp_", 0);
         }
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(0, 2, 0));
-        hologram.appendTextLine(Files.colorize("&c- " + amount + " Mythicc XP"));
-    }
 
-    public static void saveXPData(@NotNull Player p) {
-        Files.getdatafile().set("players." + p.getName() + ".xp", getXP(p));
+        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(1.5, 1.5, 0));
+        VisibilityManager visiblityManager = hologram.getVisibilityManager();
+        visiblityManager.showTo(p);
+        visiblityManager.setVisibleByDefault(false);
+        hologram.appendTextLine(Files.colorize("&c- " + amount + " Mythicc XP"));
     }
 }

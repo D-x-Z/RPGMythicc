@@ -1,6 +1,7 @@
 package net.danh.rpgmythicc.Manager;
 
 import net.danh.rpgmythicc.Data.Level;
+import net.danh.rpgmythicc.Data.RankID;
 import net.danh.rpgmythicc.Data.XP;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -31,6 +32,9 @@ public class Commands implements CommandExecutor {
                                 if (args[0].equalsIgnoreCase("xp")) {
                                     XP.setXP(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Integer.parseInt(args[3]));
                                 }
+                                if (args[0].equalsIgnoreCase("rankid")) {
+                                    RankID.setRankID(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Integer.parseInt(args[3]));
+                                }
                             }
                             if (args[1].equalsIgnoreCase("add")) {
                                 if (args[0].equalsIgnoreCase("level")) {
@@ -39,6 +43,9 @@ public class Commands implements CommandExecutor {
                                 if (args[0].equalsIgnoreCase("xp")) {
                                     XP.addXP(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Integer.parseInt(args[3]));
                                 }
+                                if (args[0].equalsIgnoreCase("rankid")) {
+                                    RankID.addRankID(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Integer.parseInt(args[3]));
+                                }
                             }
                             if (args[1].equalsIgnoreCase("remove")) {
                                 if (args[0].equalsIgnoreCase("level")) {
@@ -46,6 +53,9 @@ public class Commands implements CommandExecutor {
                                 }
                                 if (args[0].equalsIgnoreCase("xp")) {
                                     XP.removeXP(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Integer.parseInt(args[3]));
+                                }
+                                if (args[0].equalsIgnoreCase("rankid")) {
+                                    RankID.removeRankID(Objects.requireNonNull(Bukkit.getPlayer(args[2])), Integer.parseInt(args[3]));
                                 }
                             }
                         }

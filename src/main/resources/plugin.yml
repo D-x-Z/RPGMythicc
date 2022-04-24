@@ -5,6 +5,7 @@ api-version: 1.17
 loadbefore: [ MMOItems ]
 depend: [ MMOItems ]
 softdepend: [ PlaceholderAPI, HolographicDisplays ]
+website: https://github.com/D-x-Z/RPGMythicc
 authors: [ VoChiDanh ]
 description: Plugins For MythiccRPG Project
 commands:
