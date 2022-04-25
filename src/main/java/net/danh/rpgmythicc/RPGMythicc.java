@@ -3,6 +3,7 @@ package net.danh.rpgmythicc;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import net.Indyuce.mmoitems.MMOItems;
+import net.danh.rpgmythicc.Compatible.MythiccID;
 import net.danh.rpgmythicc.Compatible.MythiccLevel;
 import net.danh.rpgmythicc.Compatible.PlaceholderAPI;
 import net.danh.rpgmythicc.Data.Data;
@@ -39,6 +40,7 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
     public void onLoad() {
         instance = this;
         MMOItems.plugin.getStats().register(new MythiccLevel());
+        MMOItems.plugin.getStats().register(new MythiccID());
     }
 
     @Override
@@ -50,6 +52,8 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
         }
         if (getServer().getPluginManager().getPlugin("MMOItems") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with MMOItems!");
+            MMOItems.plugin.getLogger().log(Level.INFO,"Registered Mythicc Level Stats");
+            MMOItems.plugin.getLogger().log(Level.INFO,"Registered Mythicc ID Stats");
         } else {
             getLogger().severe("*** MMOItems is not installed or not enabled. ***");
             getLogger().severe("*** This plugin will be disabled. ***");

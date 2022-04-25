@@ -46,6 +46,12 @@ public class PlaceholderAPI extends PlaceholderExpansion {
         if (identifier.equalsIgnoreCase("level_format")) {
             return String.format("%,d", Level.getLevel(p));
         }
+        if (identifier.equalsIgnoreCase("id")) {
+            return String.valueOf(RankID.getRankID(p));
+        }
+        if (identifier.equalsIgnoreCase("id_format")) {
+            return String.format("%,d", RankID.getRankID(p));
+        }
         if (identifier.equalsIgnoreCase("rankid")) {
             if (Files.getconfigfile().getString("SETTINGS.RANK.ID" + RankID.getRankID(p)) != null) {
                 return Files.colorize(Files.getconfigfile().getString("SETTINGS.RANK.ID" + RankID.getRankID(p)));
