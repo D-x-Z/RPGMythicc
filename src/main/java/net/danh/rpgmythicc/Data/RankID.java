@@ -18,8 +18,8 @@ public class RankID {
         return RankID.get(p.getName() + "_RankID_");
     }
 
-    public static boolean isUnload(@NotNull Player p) {
-        return !RankID.containsKey(p.getName() + "_RankID_");
+    public static boolean isLoad(@NotNull Player p) {
+        return RankID.containsKey(p.getName() + "_RankID_");
     }
 
     public static void setRankID(@NotNull Player p, Integer id) {

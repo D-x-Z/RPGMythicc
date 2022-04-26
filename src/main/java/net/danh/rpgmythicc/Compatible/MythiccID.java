@@ -10,6 +10,8 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class MythiccID extends DoubleStat implements ItemRestriction {
 
     public MythiccID() {
@@ -20,8 +22,12 @@ public class MythiccID extends DoubleStat implements ItemRestriction {
 
     @Override
     public boolean canUse(@NotNull RPGPlayer rpgPlayer, @NotNull NBTItem nbtItem, boolean b) {
-        int Rank = nbtItem.getInteger("MMOITEMS_MYTHICC_ID");
-        if (RankID.isUnload(rpgPlayer.getPlayer()) && RankID.getRankID(rpgPlayer.getPlayer()) < Rank && !rpgPlayer.getPlayer().hasPermission("RPGMythicc.admin")) {
+        String rank = nbtItem.getString("MMOITEMS_MYTHICC_ID");
+        String id = Files.getconfigfile().getString("SETTINGS.RANK.ID" + RankID.getRankID(rpgPlayer.getPlayer()));
+        if (id == null) {
+            id = Files.getconfigfile().getString("SETTINGS.RANK.ID0");
+        }
+        if (!RankID.isLoad(rpgPlayer.getPlayer()) && (!Objects.equals(id, rank) && !rpgPlayer.getPlayer().hasPermission("RPGMythicc.admin"))) {
             if (b) {
                 rpgPlayer.getPlayer().sendTitle(Files.colorize("&c&lCảnh Báo"), Files.colorize("&3ID của bạn không thể để dùng vật phẩm này"), 10, 10, 10);
                 rpgPlayer.getPlayer().playSound(rpgPlayer.getPlayer().getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1.5f);

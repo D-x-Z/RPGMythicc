@@ -22,8 +22,8 @@ public class Level {
         return level.get(p.getName() + "_level_");
     }
 
-    public static boolean isUnload(@NotNull Player p) {
-        return !level.containsKey(p.getName() + "_level_");
+    public static boolean isLoad(@NotNull Player p) {
+        return level.containsKey(p.getName() + "_level_");
     }
 
     public static void setLevel(@NotNull Player p, Integer amount) {

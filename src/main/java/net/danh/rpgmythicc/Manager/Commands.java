@@ -22,6 +22,12 @@ public class Commands implements CommandExecutor {
                         sender.sendMessage(Files.colorize(help));
                     }
                 }
+                if (args.length == 1) {
+                    if (args[0].equalsIgnoreCase("reload")) {
+                        Files.reloadfiles();
+                        sender.sendMessage(Files.colorize("Reloaded"));
+                    }
+                }
                 if (args.length == 4) {
                     if (Bukkit.getPlayer(args[2]) != null) {
                         if (Integer.parseInt(args[3]) >= 0) {

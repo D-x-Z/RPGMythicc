@@ -52,8 +52,8 @@ public final class RPGMythicc extends PonderBukkitPlugin implements Listener {
         }
         if (getServer().getPluginManager().getPlugin("MMOItems") != null) {
             getLogger().log(Level.INFO, "Successfully hooked with MMOItems!");
-            MMOItems.plugin.getLogger().log(Level.INFO,"Registered Mythicc Level Stats");
-            MMOItems.plugin.getLogger().log(Level.INFO,"Registered Mythicc ID Stats");
+            MMOItems.plugin.getLogger().log(Level.INFO, "Registered Mythicc Level Stats");
+            MMOItems.plugin.getLogger().log(Level.INFO, "Registered Mythicc ID Stats");
         } else {
             getLogger().severe("*** MMOItems is not installed or not enabled. ***");
             getLogger().severe("*** This plugin will be disabled. ***");
