@@ -1,6 +1,6 @@
 package net.danh.rpgmythicc.Data;
 
-import net.danh.rpgmythicc.Manager.Files;
+import net.danh.rpgmythicc.PManager.Files;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,11 +15,14 @@ public class RankID {
     }
 
     public static int getRankID(@NotNull Player p) {
+        if (isLoad(p)) {
+            setRankID(p, Math.max(getRankIDData(p), 0));
+        }
         return RankID.get(p.getName() + "_RankID_");
     }
 
     public static boolean isLoad(@NotNull Player p) {
-        return RankID.containsKey(p.getName() + "_RankID_");
+        return !RankID.containsKey(p.getName() + "_RankID_");
     }
 
     public static void setRankID(@NotNull Player p, Integer id) {

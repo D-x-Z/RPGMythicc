@@ -1,7 +1,7 @@
 package net.danh.rpgmythicc.Event;
 
 import net.danh.rpgmythicc.Data.XP;
-import net.danh.rpgmythicc.Manager.Files;
+import net.danh.rpgmythicc.PManager.Files;
 import net.danh.rpgmythicc.RPGMythicc;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.entity.Player;
@@ -24,15 +24,15 @@ public class Death implements Listener {
             EconomyResponse economyResponse = RPGMythicc.economy.withdrawPlayer(p, money);
             XP.removeXP(p, xp);
             if (economyResponse.transactionSuccess()) {
-                p.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("DEATH.PLAYER"))
+                RPGMythicc.get().getChatManager().sendMessage(p, (Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("DEATH.PLAYER"))
                         .replaceAll("%money%", String.format("%4.3f", money))
-                        .replaceAll("%xp%", String.format("%,d", xp))));
+                        .replaceAll("%xp%", String.format("%,d", xp)))));
             }
             if (k != null) {
                 EconomyResponse economy = RPGMythicc.economy.depositPlayer(k, money);
                 XP.addXP(k, xp);
                 if (economy.transactionSuccess()) {
-                    k.sendMessage(Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("DEATH.KILLER"))
+                    RPGMythicc.get().getChatManager().sendMessage(k, Files.colorize(Objects.requireNonNull(Files.getlanguagefile().getString("DEATH.KILLER"))
                             .replaceAll("%money%", String.format("%4.3f", money))
                             .replaceAll("%xp%", String.format("%,d", xp))
                             .replaceAll("%player%", p.getName())));

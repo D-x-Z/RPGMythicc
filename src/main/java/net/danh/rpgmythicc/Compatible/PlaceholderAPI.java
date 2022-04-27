@@ -4,7 +4,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.danh.rpgmythicc.Data.Level;
 import net.danh.rpgmythicc.Data.RankID;
 import net.danh.rpgmythicc.Data.XP;
-import net.danh.rpgmythicc.Manager.Files;
+import net.danh.rpgmythicc.PManager.Files;
 import net.danh.rpgmythicc.RPGMythicc;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

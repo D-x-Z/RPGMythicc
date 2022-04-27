@@ -1,9 +1,6 @@
 package net.danh.rpgmythicc.Data;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
-import net.danh.rpgmythicc.Manager.Files;
+import net.danh.rpgmythicc.PManager.Files;
 import net.danh.rpgmythicc.RPGMythicc;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -19,11 +16,14 @@ public class Level {
     }
 
     public static int getLevel(@NotNull Player p) {
+        if (isLoad(p)) {
+            setLevel(p, Math.max(getLevelData(p), 1));
+        }
         return level.get(p.getName() + "_level_");
     }
 
     public static boolean isLoad(@NotNull Player p) {
-        return level.containsKey(p.getName() + "_level_");
+        return !level.containsKey(p.getName() + "_level_");
     }
 
     public static void setLevel(@NotNull Player p, Integer amount) {
@@ -31,12 +31,8 @@ public class Level {
     }
 
     public static void addLevel(@NotNull Player p, Integer amount) {
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(1.5, 1.5, 0));
-        VisibilityManager visiblityManager = hologram.getVisibilityManager();
-        visiblityManager.showTo(p);
-        visiblityManager.setVisibleByDefault(false);
-        hologram.appendTextLine(Files.colorize("&a+ " + amount + " Mythicc Level"));
         level.replace(p.getName() + "_level_", getLevel(p) + amount);
+        RPGMythicc.get().getChatManager().sendActionBar(p, Files.colorize("&a+ " + amount + "&e Mythicc Level"));
     }
 
     public static void removeLevel(@NotNull Player p, Integer amount) {
@@ -45,10 +41,6 @@ public class Level {
         } else {
             level.put(p.getName() + "_level_", 1);
         }
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(1.5, 1.5, 0));
-        VisibilityManager visiblityManager = hologram.getVisibilityManager();
-        visiblityManager.showTo(p);
-        visiblityManager.setVisibleByDefault(false);
-        hologram.appendTextLine(Files.colorize("&c- " + amount + " Mythicc Level"));
+        RPGMythicc.get().getChatManager().sendActionBar(p, Files.colorize("&c- " + amount + "&e Mythicc Level"));
     }
 }

@@ -1,9 +1,6 @@
 package net.danh.rpgmythicc.Data;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
-import net.danh.rpgmythicc.Manager.Files;
+import net.danh.rpgmythicc.PManager.Files;
 import net.danh.rpgmythicc.RPGMythicc;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -27,12 +24,8 @@ public class XP {
     }
 
     public static void addXP(@NotNull Player p, Integer amount) {
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(1.5, 1.5, 0));
-        VisibilityManager visiblityManager = hologram.getVisibilityManager();
-        visiblityManager.showTo(p);
-        visiblityManager.setVisibleByDefault(false);
-        hologram.appendTextLine(Files.colorize("&a+ " + amount + " Mythicc XP"));
         xp.replace(p.getName() + "_xp_", getXP(p) + amount);
+        RPGMythicc.get().getChatManager().sendActionBar(p, Files.colorize("&a+ " + amount + "&6 Mythicc XP"));
         Data.checkLevelup(p);
     }
 
@@ -42,11 +35,6 @@ public class XP {
         } else {
             xp.put(p.getName() + "_xp_", 0);
         }
-
-        Hologram hologram = HologramsAPI.createHologram(RPGMythicc.get(), p.getLocation().add(1.5, 1.5, 0));
-        VisibilityManager visiblityManager = hologram.getVisibilityManager();
-        visiblityManager.showTo(p);
-        visiblityManager.setVisibleByDefault(false);
-        hologram.appendTextLine(Files.colorize("&c- " + amount + " Mythicc XP"));
+        RPGMythicc.get().getChatManager().sendActionBar(p, Files.colorize("&c- " + amount + "&6 Mythicc XP"));
     }
 }
