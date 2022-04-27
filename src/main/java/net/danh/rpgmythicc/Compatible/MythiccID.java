@@ -27,7 +27,7 @@ public class MythiccID extends StringStat implements ItemRestriction {
         if (id == null) {
             id = Files.getconfigfile().getString("SETTINGS.RANK.ID0");
         }
-        if (RankID.isLoad(rpgPlayer.getPlayer()) && (!Objects.equals(id, rank) && !rpgPlayer.getPlayer().hasPermission("RPGMythicc.admin"))) {
+        if (RankID.isLoad(rpgPlayer.getPlayer()) || (!Objects.equals(id, rank) || !rpgPlayer.getPlayer().hasPermission("RPGMythicc.admin"))) {
             if (b) {
                 rpgPlayer.getPlayer().sendTitle(Files.colorize("&c&lCảnh Báo"), Files.colorize("&3ID của bạn không thể để dùng vật phẩm này"), 10, 10, 10);
                 rpgPlayer.getPlayer().playSound(rpgPlayer.getPlayer().getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1.5f);
